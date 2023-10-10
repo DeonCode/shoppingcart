@@ -55,32 +55,38 @@ function removeProductFromCart(productId) {
 }
 
 function cartTotal() {
-  let total = 0;
-  for (const product of cart) {
-    total += product.price * product.quantity;
-  }
-  return total;
-}
-
-function emptyCart() {
-  for (const product of cart) {
-    product.quantity = 0;
-  }
-  cart.length = 0;
-}
-
-function pay(amount) {
-  const total = cartTotal();
+  let total = 0; 
+cart.forEach(product => {
+  total += product.price * product.quantity;
+});
+return total;
+};
+/* Create a function called emptyCart that empties the products from the cart */
+function emptyCart(){
+  cart.splice(0,cart.length);
   
-  if (amount < total) {
-    return amount - total;
-    
-  } else {
-    emptyCart();
-    return amount - total;
-    
-   }
-}
+  products.forEach((product) => {
+    product.quantity = 0;
+  });
+};
+/* Create a function named pay that takes in an amount as an argument
+  - pay will return a negative number if there is a remaining balance
+  - pay will return a positive number if money should be returned to customer
+*/
+let remaining = 0;
+function pay(amount){
+   remaining += amount;
+   return remaining - cartTotal();
+};
+/* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
+
+
+/* The following is for running unit tests. 
+   To fully complete this project, it is expected that all tests pass.
+   Run the following command in terminal to run tests
+   npm run test
+*/
+
 
 module.exports = {
    products,
@@ -91,5 +97,6 @@ module.exports = {
    removeProductFromCart,
    cartTotal,
    pay, 
-   emptyCart
-}
+   emptyCart,
+ // currency
+};
